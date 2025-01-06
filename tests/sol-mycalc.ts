@@ -67,4 +67,17 @@ describe("sol-mycalc", () => {
 
     assert.ok(account.result.eq(new anchor.BN(6)));
   });
+
+  it("Divides two numbers", async () => {
+    await program.rpc.div(new anchor.BN(10), new anchor.BN(3), {
+      accounts: {
+        calculator: calculatorKeypair.publicKey,
+      },
+    });
+
+    const account = await program.account.calculator.fetch(calculatorKeypair.publicKey);
+
+    assert.ok(account.result.eq(new anchor.BN(3)));
+    assert.ok(account.reminder.eq(new anchor.BN(1)));
+  });
 });
