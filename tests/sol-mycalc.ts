@@ -43,4 +43,16 @@ describe("sol-mycalc", () => {
 
     assert.ok(account.result.eq(new anchor.BN(5)));
   });
+
+  it("Subtracts two numbers", async () => {
+    await program.rpc.sub(new anchor.BN(10), new anchor.BN(5), {
+      accounts: {
+        calculator: calculatorKeypair.publicKey,
+      },
+    });
+
+    const account = await program.account.calculator.fetch(calculatorKeypair.publicKey);
+
+    assert.ok(account.result.eq(new anchor.BN(5)));
+  });
 });
