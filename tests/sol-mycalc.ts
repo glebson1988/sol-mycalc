@@ -26,11 +26,21 @@ describe("sol-mycalc", () => {
       .rpc();
 
     // Fetch the account data from the blockchain
-    const account = await program.account.calculator.fetch(
-      calculatorKeypair.publicKey
-    );
+    const account = await program.account.calculator.fetch(calculatorKeypair.publicKey);
 
     // Assert that the greeting message is correctly saved
     assert.strictEqual(account.greeting, "Welcome to Solana");
+  });
+
+  it("Adds two numbers", async () => {
+    await program.rpc.add(new anchor.BN(2), new anchor.BN(3), {
+      accounts: {
+        calculator: calculatorKeypair.publicKey,
+      },
+    });
+
+    const account = await program.account.calculator.fetch(calculatorKeypair.publicKey);
+
+    assert.ok(account.result.eq(new anchor.BN(5)));
   });
 });
