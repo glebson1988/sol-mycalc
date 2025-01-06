@@ -55,4 +55,16 @@ describe("sol-mycalc", () => {
 
     assert.ok(account.result.eq(new anchor.BN(5)));
   });
+
+  it("Multiplies two numbers", async () => {
+    await program.rpc.mul(new anchor.BN(2), new anchor.BN(3), {
+      accounts: {
+        calculator: calculatorKeypair.publicKey,
+      },
+    });
+
+    const account = await program.account.calculator.fetch(calculatorKeypair.publicKey);
+
+    assert.ok(account.result.eq(new anchor.BN(6)));
+  });
 });
