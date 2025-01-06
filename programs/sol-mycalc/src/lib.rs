@@ -6,7 +6,7 @@ declare_id!("DLooCc9TPNAB4EdazPb2TGzo7URacxiJ9XwZHSYTaPP7");
 #[program]
 pub mod sol_mycalc {
     use super::*;
-    pub fn add(ctx: Context<Create>, init_message: String) -> ProgramResult {
+    pub fn create(ctx: Context<Create>, init_message: String) -> ProgramResult {
         let calculator: &mut Account<'_, Calculator> = &mut ctx.accounts.calculator;
         calculator.greeting = init_message;
         Ok(())
